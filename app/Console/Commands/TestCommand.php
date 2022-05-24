@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Modules\Expenses\Models\Expense;
 
 class TestCommand extends Command
 {
@@ -26,10 +27,8 @@ class TestCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
-        Expense::query()->create(['name' => 'Tesst', 'sum' => 332.43]);
-
         return 0;
     }
 }
