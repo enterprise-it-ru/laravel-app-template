@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+  <div class="d-block mt-5">
+    <div class="col-md-4 mx-auto">
       <div>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="authorize">
-        <div class="bg-red-500 text-white rounded px-4 py-2" v-if="error">{{ error }}</div>
+        <div class="alert alert-danger" v-if="error">{{ error }}</div>
 
         <div class="rounded-md shadow-sm -space-y-px">
           <div class="mb-4">
@@ -15,7 +15,7 @@
               name="email"
               type="email"
               autocomplete="email"
-              class="form-input"
+              class="form-control"
               placeholder="Email address"
               required
               v-model="form.email"
@@ -28,7 +28,7 @@
               name="password"
               type="password"
               autocomplete="current-password"
-              class="form-input"
+              class="form-control"
               placeholder="Password"
               required
               v-model="form.password"
@@ -36,9 +36,9 @@
           </div>
         </div>
 
-        <div class="flex items-center">
-          <input id="remember-me" name="remember-me" type="checkbox" class="form-checkbox" v-model="form.remember">
-          <label for="remember-me" class="form-checkbox-label">Remember me</label>
+        <div class="form-check mb-2 mt-2">
+          <input id="remember-me" name="remember-me" type="checkbox" class="form-check-input" v-model="form.remember">
+          <label for="remember-me" class="form-check-label">Remember me</label>
         </div>
 
         <button type="submit" class="btn btn-primary w-full" :disabled="loading">

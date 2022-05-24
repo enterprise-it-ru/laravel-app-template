@@ -30,6 +30,7 @@
     "vue-template-compiler": "^2.6.14"
   },
   "dependencies": {
+    "bootstrap": "^5.2.0-beta1",
     "pinia": "^2.0.13",
     "vue": "^3.2.33",
     "vue-i18n": "^9.1.10",

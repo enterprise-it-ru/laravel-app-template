@@ -1,12 +1,13 @@
 const axios = require('axios');
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 import router from './router';
 import AppComponent from "./App.vue";
 import {authStore} from "@/stores/authStore";
+
+import 'bootstrap';
 
 const app = createApp(AppComponent)
 app.use(createPinia())
