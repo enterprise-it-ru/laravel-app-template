@@ -2,7 +2,6 @@
   <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <img class="mx-auto h-12 w-auto" src="../../images/workflow-mark-indigo-600.svg" alt="Workflow"/>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="authorize">
@@ -42,10 +41,7 @@
           <label for="remember-me" class="form-checkbox-label">Remember me</label>
         </div>
 
-        <button type="submit" class="btn-primary w-full" :disabled="loading">
-          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-            <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true"/>
-          </span>
+        <button type="submit" class="btn btn-primary w-full" :disabled="loading">
           Sign in
         </button>
       </form>
@@ -54,13 +50,11 @@
 </template>
 
 <script lang="ts">
-import {LockClosedIcon} from '@heroicons/vue/solid'
 import axios from "axios";
 import {authStore} from "@/stores/authStore";
 
 export default {
   name: "LoginPage",
-  components: {LockClosedIcon},
   data() {
     return {
       form: {

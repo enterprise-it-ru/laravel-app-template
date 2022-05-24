@@ -1,13 +1,12 @@
-# invest-stat
+# {PROJECT_NAME}
 
-The personal project for tracking investment statistics
-
+Краткое описание проекта
 
 ## Installation
 
 ```bash
-git clone git@github.com:simba77/invest-stat.git invest-stat.local
-cd invest-stat.local
+git clone git@github.com:enterprise-it-ru/{PROJECT_NAME}.git {PROJECT_NAME}.local
+cd {PROJECT_NAME}.local
 composer install
 ```
 
@@ -34,8 +33,3 @@ For development mode, use the command
 ```bash
 npm run hot
 ```
-
-
-## License
-
-[MIT license](https://opensource.org/licenses/MIT)
