@@ -17,4 +17,5 @@ yarn-error.log
 /public/assets/app.js
 /public/assets/*.js
 /public/assets/*.txt
+/public/build
 /public/mix-manifest.json
