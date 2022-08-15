@@ -2,6 +2,10 @@
 
 Краткое описание проекта
 
+## Документация
+
+[Документация находится здесь](documentation)
+
 ## Installation
 
 ```bash
@@ -25,11 +29,11 @@ npm install
 ```
 
 ```bash
-npm run prod
+npm run build
 ```
 
 For development mode, use the command
 
 ```bash
-npm run hot
+npm run dev
 ```
