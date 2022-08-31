@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Modules\Auth\Controllers\AuthController;
-use Modules\Dashboard\Controllers\DashboardController;
-use Modules\Expenses\Controllers\ExpensesController;
-use Modules\Investments\Controllers\DepositsController;
 
 Route::group(['prefix' => 'api'], function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::get('/checkAuth', [AuthController::class, 'getCurrentAuth'])->name('auth.currentAuth');
 
     // For authorized users
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/checkAuth', [AuthController::class, 'getCurrentAuth'])->name('auth.currentAuth');
+        // Роуты для авторизованных
     });
 });
 

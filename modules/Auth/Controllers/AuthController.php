@@ -31,6 +31,9 @@ class AuthController extends Controller
     public function getCurrentAuth(): array
     {
         $user = Auth::user();
-        return ['id' => $user->id, 'name' => $user->name, 'email' => $user->email];
+        if ($user) {
+            return ['id' => $user->id, 'name' => $user->name, 'email' => $user->email];
+        }
+        return ['id' => null];
     }
 }
