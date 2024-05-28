@@ -1,10 +1,28 @@
-* text=auto
+* text=auto eol=lf
 
-*.blade.php diff=html
-*.css diff=css
-*.html diff=html
-*.md diff=markdown
-*.php diff=php
+*.css   text eol=lf
+*.html  text eol=lf
+*.js    text eol=lf
+*.ts    text eol=lf
+*.vue   text eol=lf
+*.json  text eol=lf
+*.lng   text eol=lf
+*.md    text eol=lf
+*.php   text eol=lf
+*.po    text eol=lf
+*.pot   text eol=lf
+*.svg   text eol=lf
+*.txt   text eol=lf
+*.yml   text eol=lf
+*.sh    text eol=lf
+*.ini   text eol=lf
+*.conf  text eol=lf
+*.dist  text eol=lf
 
-/.github export-ignore
-CHANGELOG.md export-ignore
+Makefile text eol=lf
+
+.docker/nginx/Dockerfile text eol=lf
+.docker/php-fpm/Dockerfile text eol=lf
+
+composer.lock text eol=lf merge=ours
+package-lock.json text eol=lf merge=ours
