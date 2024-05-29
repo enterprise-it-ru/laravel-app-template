@@ -1,32 +1,11 @@
-<template>
-  <div class="">
-    <label :for="elementId" class="block text-sm font-medium text-gray-700">{{ label }}</label>
-    <input
-      :class="[error ? 'border-red-500' : '', 'mt-1 form-input']"
-      :id="elementId"
-      :name="name"
-      :type="type"
-      :placeholder="placeholder"
-      :required="required"
-      :readonly="readonly"
-      :enterkeyhint="enterKeyHint"
-      @input="updateModelValue"
-      :pattern="type === 'number' ? '[0-9]*' : null"
-      step=".001"
-      :autocomplete="autocomplete !== '' ? autocomplete : null"
-      v-model="value"
-    >
-    <div class="mt-1 text-sm text-gray-500" v-if="help" v-html="help"></div>
-    <div class="mt-1 text-sm text-red-500" v-if="error">{{ typeof error === 'object' ? error.join(',') : error }}</div>
-  </div>
-</template>
-
 <script lang="ts">
 export default {
   name: "InputText",
-  emits: ['update:modelValue'],
   props: {
-    modelValue: String,
+    modelValue: {
+      type: String,
+      default: '',
+    },
     label: {
       type: String,
       default: '',
@@ -76,6 +55,7 @@ export default {
       default: false,
     },
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       value: this.modelValue,
@@ -89,3 +69,28 @@ export default {
   }
 }
 </script>
+
+<template>
+  <div class="">
+    <label :for="elementId" class="block text-sm font-medium text-gray-700">{{ label }}</label>
+    <input
+      :id="elementId"
+      v-model="value"
+      :class="[error ? 'border-red-500' : '', 'mt-1 form-input']"
+      :name="name"
+      :type="type"
+      :placeholder="placeholder"
+      :required="required"
+      :readonly="readonly"
+      :enterkeyhint="enterKeyHint"
+      :pattern="type === 'number' ? '[0-9]*' : null"
+      step=".001"
+      :autocomplete="autocomplete !== '' ? autocomplete : null"
+      @input="updateModelValue"
+    >
+    <div v-if="help" class="mt-1 text-sm text-gray-500" v-html="help" />
+    <div v-if="error" class="mt-1 text-sm text-red-500">
+      {{ typeof error === 'object' ? error.join(',') : error }}
+    </div>
+  </div>
+</template>

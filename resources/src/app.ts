@@ -5,7 +5,7 @@ import {createApp} from 'vue'
 import {createPinia} from 'pinia'
 import router from './router';
 import AppComponent from "./App.vue";
-import {authStore} from "@/stores/authStore";
+import {authStore} from "./stores/authStore";
 
 import 'bootstrap';
 

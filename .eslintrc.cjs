@@ -5,7 +5,7 @@ module.exports = {
     'vue/setup-compiler-macros': true
   },
   'extends': [
-    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/typescript/recommended'
   ],
@@ -17,6 +17,19 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/no-deprecated-slot-attribute': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'vue/no-v-text-v-html-on-component': 'off',
+    'vue/no-v-html': 'off',
+    'vue/max-attributes-per-line': ['error', {
+      'singleline': {
+        'max': 4
+      },
+      'multiline': {
+        'max': 1
+      }
+    }],
+    "vue/block-order": ["error", {
+      "order": [ "script", "template", "style" ]
+    }]
   },
   overrides: [
     {

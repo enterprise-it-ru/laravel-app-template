@@ -15,6 +15,10 @@ Route::group(['prefix' => 'api'], function () {
     });
 });
 
+Route::get('/admin{any}', fn() => view('admin_spa'))
+    ->where('any', '.*')
+    ->name('admin.spa');
+
 Route::get('/{any}', fn() => view('spa'))
     ->where('any', '.*')
     ->name('spa');

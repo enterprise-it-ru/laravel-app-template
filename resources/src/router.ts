@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       requiresAuth: true,
     },
-    component: () => import('@/views/HomePage.vue')
+    component: () => import('./pages/HomePage.vue')
   },
   {
     name: 'Login',
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       onlyGuests: true,
     },
-    component: () => import('@/views/LoginPage.vue')
+    component: () => import('./pages/LoginPage.vue')
   },
 ];
 
