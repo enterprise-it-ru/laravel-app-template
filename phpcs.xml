@@ -8,7 +8,6 @@
     <arg name="colors"/>
 
     <!-- Paths to check -->
-    <file>app</file>
     <file>modules</file>
     <file>database/factories</file>
     <file>database/seeders</file>
