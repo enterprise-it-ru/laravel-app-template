@@ -28,7 +28,7 @@ module.exports = {
       }
     }],
     "vue/block-order": ["error", {
-      "order": [ "script", "template", "style" ]
+      "order": ["script", "template", "style"]
     }]
   },
   overrides: [
@@ -39,6 +39,15 @@ module.exports = {
       ],
       env: {
         jest: true
+      }
+    },
+    {
+      files: [
+        'resources/admin/pages/**/*',
+        'resources/src/pages/**/*',
+      ],
+      rules: {
+        'vue/multi-word-component-names': 'off',
       }
     }
   ]
