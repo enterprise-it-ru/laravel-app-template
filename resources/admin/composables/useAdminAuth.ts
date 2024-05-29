@@ -6,7 +6,12 @@ export const useAdminAuth = () => {
     return axios.post('/auth/login', form)
   }
 
+  function logout() {
+    return axios.post('/auth/logout')
+  }
+
   return {
-    login
+    login,
+    logout
   }
 }

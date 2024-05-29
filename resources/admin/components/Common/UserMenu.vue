@@ -1,12 +1,18 @@
 <script setup lang="ts">
-import { UserIcon, ChevronDownIcon } from '@heroicons/vue/24/outline'
+import { UserIcon, ChevronDownIcon, ArrowLeftStartOnRectangleIcon } from '@heroicons/vue/24/outline'
 import { authStore } from "../../stores/authStore";
+import useAsync from "../../composables/useAsync";
+import { useAdminAuth } from "../../composables/useAdminAuth";
 
-const { userData } = authStore()
-
-function logout() {
-  alert('logout')
-}
+const {userData, checkAuth} = authStore()
+const {logout} = useAdminAuth()
+const {run} = useAsync(() => logout().then(() => {
+  checkAuth().then((response) => {
+    if (!response) {
+      document.location.reload();
+    }
+  })
+}))
 
 </script>
 
@@ -19,8 +25,8 @@ function logout() {
     </div>
     <ul class="dropdown-menu w-75">
       <li>
-        <a class="dropdown-item align-items-center d-flex" href="#" @click.prevent="logout">
-          <ion-icon :icon="logOutOutline" class="logout-icon me-1" />
+        <a class="dropdown-item align-items-center d-flex" href="#" @click.prevent="run">
+          <arrow-left-start-on-rectangle-icon class="logout-icon me-1" />
           Выйти
         </a>
       </li>
@@ -30,7 +36,7 @@ function logout() {
 
 <style scoped lang="scss">
 .logout-icon {
-  font-size: 20px;
+  width: 20px;
 }
 
 .user-profile-button {
