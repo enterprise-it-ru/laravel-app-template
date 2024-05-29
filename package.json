@@ -4,8 +4,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint ./resources/src --ext .js,.ts,.vue",
-    "lint-fix": "eslint ./resources/src --ext .js,.ts,.vue --fix"
+    "dev:admin": "vite --config vite.admin.config.ts",
+    "build:admin": "vite build --config vite.admin.config.ts",
+    "lint": "eslint ./resources --ext .js,.ts,.vue",
+    "lint-fix": "eslint ./resources --ext .js,.ts,.vue --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.62.0",

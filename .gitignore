@@ -19,6 +19,7 @@ yarn-error.log
 /public/assets/*.js
 /public/assets/*.txt
 /public/build
+/public/build-admin
 /public/mix-manifest.json
 /.docker/mariadb/data
 /.docker/redis/data
