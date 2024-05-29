@@ -6,13 +6,38 @@ import {createPinia} from 'pinia'
 import router from './router';
 import AppComponent from "./App.vue";
 import {authStore} from "./stores/authStore";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import './scss/app.scss'
 
 import 'bootstrap';
 
+import {
+  // Directives
+  vTooltip,
+  vClosePopper,
+  // Components
+  Dropdown,
+  Tooltip,
+  Menu
+} from 'floating-vue'
+
 const app = createApp(AppComponent)
 app.use(createPinia())
+app.use(Toast, {
+  transition: 'Vue-Toastification__slideBlurred',
+  maxToasts: 4,
+  newestOnTop: true
+})
+
+app.directive('tooltip', vTooltip)
+app.directive('close-popper', vClosePopper)
+
+app.component('VDropdown', Dropdown)
+app.component('VTooltip', Tooltip)
+app.component('VMenu', Menu)
+
 
 // Check auth
 router.beforeEach((to) => {

@@ -1,110 +1,102 @@
-<script lang="ts">
-import axios from "axios";
-import {authStore} from "@/stores/authStore";
+<script setup lang="ts">
+import { authStore } from "../stores/authStore";
+import { useAdminAuth } from "../composables/useAdminAuth";
+import useAsync from "../composables/useAsync";
+import { reactive, ref } from "vue";
+import { AuthLoginForm } from "../types/auth";
+import { useRouter } from "vue-router";
+import InputTextComponent from "../components/Forms/InputTextComponent.vue";
+import CheckboxComponent from "../components/Forms/CheckboxComponent.vue";
 
-export default {
-  name: "LoginPage",
-  data() {
-    return {
-      form: {
-        email: '',
-        password: '',
-        remember: true,
-      },
-      loading: false,
-      error: null,
+const router = useRouter()
+const form = reactive<AuthLoginForm>({
+  email: '',
+  password: '',
+  remember: true
+})
+const error = ref(null)
+
+const {loading: checkingAuth, run: checkAuth} = useAsync(() => authStore()
+  .checkAuth()
+  .then(() => {
+    router.push('/admin')
+  })
+)
+
+const {login} = useAdminAuth()
+const {loading, run: sendForm, validationErrors} = useAsync(() => login(form)
+  .then(() => {
+    checkAuth()
+  })
+  .catch((response) => {
+    if (response.response?.status === 401 && response.response?.data?.message) {
+      error.value = response.response.data.message;
+    } else {
+      throw response
     }
-  },
-  methods: {
-    authorize() {
-      this.loading = true;
-      axios.post('/api/login', this.form)
-        .then(() => {
-          // Check auth and redirect to homepage
-          authStore()
-            .checkAuth()
-            .then(() => {
-              this.$router.push({name: 'HomePage'});
-            })
-            .catch(() => {
-              alert('An error has occurred');
-            });
-        })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            this.error = error.response.data.message;
-          } else {
-            alert('An error has occurred');
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        })
-    }
-  }
-}
+  })
+)
+
 </script>
 
 <template>
-  <div class="d-block mt-5">
-    <div class="col-md-4 mx-auto">
+  <div class="d-block mt-5 login-page">
+    <div class="col-md-5 mx-auto">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 class="mt-6 text-center text-3xl fw-bolder text-gray-900">
           Sign in to your account
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="authorize">
-        <div v-if="error" class="alert alert-danger">
-          {{ error }}
-        </div>
+      <div class="card shadow mt-4 border-0">
+        <div class="card-body">
+          <form class="mt-8 space-y-6" action="#" method="POST" @submit.prevent="sendForm">
+            <div v-if="error" class="alert alert-danger">
+              {{ error }}
+            </div>
 
-        <div class="rounded-md shadow-sm -space-y-px">
-          <div class="mb-4">
-            <label for="email-address" class="sr-only">Email address</label>
-            <input
-              id="email-address"
+            <input-text-component
               v-model="form.email"
+              :error="validationErrors?.errors?.email"
+              label="E-mail"
+              placeholder="E-mail"
               name="email"
-              type="email"
               autocomplete="email"
-              class="form-control"
-              placeholder="Email address"
+              type="email"
+              class="mb-4"
               required
-            >
-          </div>
-          <div>
-            <label for="password" class="sr-only">Password</label>
-            <input
-              id="password"
+            />
+            <input-text-component
               v-model="form.password"
-              name="password"
-              type="password"
-              autocomplete="current-password"
-              class="form-control"
+              :error="validationErrors?.errors?.password"
+              label="Password"
               placeholder="Password"
+              name="password"
+              autocomplete="current-password"
+              type="password"
+              class="mb-3"
               required
-            >
-          </div>
-        </div>
+            />
+            <checkbox-component
+              v-model="form.remember"
+              :error="validationErrors?.errors?.remember"
+              name="remember"
+              label="Remember me"
+              class="mb-3"
+            />
 
-        <div class="form-check mb-2 mt-2">
-          <input
-            id="remember-me"
-            v-model="form.remember"
-            name="remember-me"
-            type="checkbox"
-            class="form-check-input"
-          >
-          <label for="remember-me" class="form-check-label">Remember me</label>
+            <button type="submit" class="btn btn-primary w-100" :disabled="loading || checkingAuth">
+              Sign in
+            </button>
+          </form>
         </div>
-
-        <button type="submit" class="btn btn-primary w-full" :disabled="loading">
-          Sign in
-        </button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.card-body {
+  --mo-card-spacer-y: 3rem;
+  --mo-card-spacer-x: 3rem;
+}
 </style>
