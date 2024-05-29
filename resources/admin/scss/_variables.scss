@@ -1,3 +1,77 @@
-$primary: #4c00e7;
 $enable-shadows: true;
 $prefix: "mo-";
+
+// Color system
+$blue: #0d6efd;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66D9b;
+$red: #df2122;
+$orange: #EB5E28;
+$yellow: rgb(255, 194, 45);
+$yellow_light: #fffbeb;
+$green: #439f49;
+$teal: #f2f2f2;
+$cyan: #68B3C8;
+$brown: #66615B;
+$dark_brown: #7d4e3c;
+
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
+
+$primary: #4c00e7 !default;
+$secondary: $gray-600 !default;
+$success: #0e783c !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-800 !default;
+
+$gradient: linear-gradient(-90deg, rgba($white, .15), rgba($white, 0)) !default;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+  "orange": $orange,
+  "dark-brown": $dark_brown,
+  "yellow-light": $yellow-light,
+  "gray": #dadada,
+  "gray-550": #828282,
+);
+
+$grid-row-columns: 6 !default;
+
+:root {
+  --bs-primary: #4c00e7;
+  --bs-secondary: #f2f2f2;
+  --bs-success: #42A084;
+  --bs-info: #68B3C8;
+  --bs-warning: #ffc107;
+  --bs-danger: #df2122;
+  --bs-gray-300: #dee2e6;
+
+  --primary-bg-text-color: #fff;
+
+  --border-color: #66615B;
+
+  --font-size-medium: 16px;
+  --font-size-normal: 14px;
+  --font-size-small: 12px;
+  --font-size-x-small: 11px;
+}

@@ -1,16 +1,14 @@
-<script lang="ts">
-export default {
-  name: "HomePage",
-  data() {
-    return {}
-  },
-}
+<script setup lang="ts">
+import AdminPageLayout from "../components/Layout/AdminPageLayout.vue";
+
 </script>
 
 <template>
-  <div class="row">
-    <div class="col-md-5 mx-auto">
-      Компонент <b>views/HomePage.vue</b>
+  <admin-page-layout>
+    <div class="row">
+      <div class="col-md-5">
+        Компонент <b>admin/pages/index.vue</b>
+      </div>
     </div>
-  </div>
+  </admin-page-layout>
 </template>
