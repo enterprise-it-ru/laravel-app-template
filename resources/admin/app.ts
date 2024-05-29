@@ -1,5 +1,7 @@
 import axios from 'axios';
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// Axios base api url
+axios.defaults.baseURL = '/admin-api/v1'
 
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'

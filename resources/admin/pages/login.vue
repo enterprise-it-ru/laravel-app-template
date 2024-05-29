@@ -31,6 +31,7 @@ const {loading, run: sendForm, validationErrors} = useAsync(() => login(form)
   .catch((response) => {
     if (response.response?.status === 401 && response.response?.data?.message) {
       error.value = response.response.data.message;
+      validationErrors.value = null
     } else {
       throw response
     }

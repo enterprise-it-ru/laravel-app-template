@@ -10,7 +10,7 @@ export const authStore = defineStore('auth', {
   actions: {
     async checkAuth() {
       return new Promise((resolve, reject) => {
-        axios.get('/api/checkAuth')
+        axios.get('/auth/check-auth')
           .then((response) => {
             if (response.data.id !== null) {
               this.userData = response.data;

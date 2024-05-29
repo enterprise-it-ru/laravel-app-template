@@ -19,6 +19,7 @@ export default function useAsync<T extends (...args: any[]) => unknown>(fn: T): 
       const result = await fn(...args)
       return result as ReturnType<T>
     } catch (error: any) {
+      validationErrors.value = null
       if (error?.response?.status === 422) {
         validationErrors.value = error.response.data
       } else {

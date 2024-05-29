@@ -7,19 +7,13 @@ namespace Modules\Users\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Modules\Users\DTO\AdminAuthFormRequestDTO;
 
 class AdminAuthController
 {
-    public function login(Request $request): \Illuminate\Http\Response | array
+    public function login(AdminAuthFormRequestDTO $form, Request $request): \Illuminate\Http\Response | array
     {
-        $credentials = $request->validate(
-            [
-                'email'    => ['required', 'email'],
-                'password' => ['required'],
-            ]
-        );
-
-        if (Auth::attempt($credentials, (bool) $request->input('remember'))) {
+        if (Auth::attempt(['email' => $form->email, 'password' => $form->password], $form->remember)) {
             $request->session()->regenerate();
             return ['id' => Auth::user()->id];
         } else {
