@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Modules\Auth\Controllers;
+namespace Modules\Users\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
-class AuthController extends Controller
+class AuthController
 {
     public function login(Request $request): \Illuminate\Http\Response | array
     {
