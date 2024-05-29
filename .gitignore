@@ -6,6 +6,7 @@
 .env
 .env.backup
 .phpunit.result.cache
+/.phpunit.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -19,5 +20,5 @@ yarn-error.log
 /public/assets/*.txt
 /public/build
 /public/mix-manifest.json
-/docker/mariadb/data
-/docker/redis/data
+/.docker/mariadb/data
+/.docker/redis/data
