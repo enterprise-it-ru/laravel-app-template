@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { HomeIcon, UsersIcon, GlobeAltIcon } from '@heroicons/vue/24/outline'
 import UserMenu from "./UserMenu.vue";
+import { onMounted, ref } from "vue";
+
+const appName = ref('');
+
+onMounted(() => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  appName.value = import.meta.env.VITE_APP_NAME
+})
 
 const menu = [
   {
@@ -25,35 +34,32 @@ const menu = [
 
 <template>
   <div class="sidebar d-flex flex-column min-vh-100">
-    <!-- Логотип -->
     <div class="sidebar-logo">
       <router-link to="/admin/" class="logo">
         <div class="logo-image">
           <img src="../../assets/logo.png" class="img-fluid" alt="" style="max-width: 150px;">
         </div>
         <div class="logo-text">
-          LUCKY TRY
+          {{ appName }}
         </div>
       </router-link>
     </div>
 
-    <!-- Пользовательское меню -->
     <div class="sidebar-user border-bottom">
       <user-menu />
     </div>
 
-    <!-- Пункты меню -->
     <div class="sidebar-menu">
       <div class="menu mt-2">
         <template v-for="(item, index) in menu" :key="index">
           <template v-if="!item.hidden">
-            <!-- Ссылка для роутера -->
+            <!-- Router links -->
             <router-link v-if="!item.external" exact-active-class="active" class="menu-item" :to="item.route">
               <component :is="item.icon" class="menu-icon" />
               <div>{{ item.name }}</div>
             </router-link>
 
-            <!-- Обычная ссылка -->
+            <!-- External links -->
             <a v-else :href="item.route" class="menu-item" :class="[item.active ? 'active' : '']">
               <component :is="item.icon" class="menu-icon" />
               <div>{{ item.name }}</div>
