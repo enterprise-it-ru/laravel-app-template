@@ -1,4 +1,4 @@
-import { AuthLoginForm } from "../types/auth";
+import { AuthLoginForm } from "../types/Auth";
 import axios from "axios";
 
 export const useAdminAuth = () => {

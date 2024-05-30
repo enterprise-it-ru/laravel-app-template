@@ -6,11 +6,13 @@ import {createPinia} from 'pinia'
 import router from './router';
 import AppComponent from "./App.vue";
 import {authStore} from "./stores/authStore";
+import { createHead } from '@unhead/vue'
 
 import 'bootstrap';
 
 const app = createApp(AppComponent)
 app.use(createPinia())
+app.use(createHead())
 
 // Check auth
 router.beforeEach((to) => {

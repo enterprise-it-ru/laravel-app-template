@@ -10,6 +10,7 @@ import AppComponent from "./App.vue";
 import {authStore} from "./stores/authStore";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import { createHead } from '@unhead/vue'
 
 import './scss/app.scss'
 
@@ -27,6 +28,7 @@ import {
 
 const app = createApp(AppComponent)
 app.use(createPinia())
+app.use(createHead())
 app.use(Toast, {
   transition: 'Vue-Toastification__slideBlurred',
   maxToasts: 4,

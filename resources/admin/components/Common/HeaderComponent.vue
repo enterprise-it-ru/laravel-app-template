@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { usePage } from "../../composables/page/usePage";
+const { pageHeader, breadcrumbs } = usePage()
 
 </script>
 
 <template>
   <div>
-    <nav v-if="pageMeta?.breadcrumbs.length > 0" aria-label="breadcrumb">
+    <nav v-if="breadcrumbs.breadcrumbs.items.length > 0" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
           <router-link to="/admin">
@@ -12,12 +14,12 @@
           </router-link>
         </li>
         <li
-          v-for="(item, index) in pageMeta.breadcrumbs"
+          v-for="(item, index) in breadcrumbs.breadcrumbs.items"
           :key="index"
           class="breadcrumb-item"
-          :class="[pageMeta.breadcrumbs.length === (index+1) ? 'active' : '']"
+          :class="[breadcrumbs.breadcrumbs.items.length === (index+1) ? 'active' : '']"
         >
-          <router-link v-if="pageMeta.breadcrumbs.length !== (index+1)" :to="item.url">
+          <router-link v-if="breadcrumbs.breadcrumbs.items.length !== (index+1)" :to="item.url">
             {{ item.name }}
           </router-link>
           <span v-else>{{ item.name }}</span>
@@ -25,7 +27,7 @@
       </ol>
     </nav>
     <h1 class="page-title">
-      {{ pageMeta?.title }}
+      {{ pageHeader.title }}
     </h1>
   </div>
 </template>

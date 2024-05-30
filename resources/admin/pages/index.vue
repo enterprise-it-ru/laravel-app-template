@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import AdminPageLayout from "../components/Layout/AdminPageLayout.vue";
+import { usePage } from "../composables/page/usePage";
+import { useHead } from "@unhead/vue";
+const {pageHeader} = usePage()
+
+pageHeader.title = 'Главная'
+
+useHead({
+  title: 'Главная'
+})
 
 </script>
 

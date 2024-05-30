@@ -1,10 +1,9 @@
-<script lang="ts">
-export default {
-  name: "HomePage",
-  data() {
-    return {}
-  },
-}
+<script setup lang="ts">
+import { useHead } from "@unhead/vue";
+
+useHead({
+  title: "Главная страница",
+})
 </script>
 
 <template>
