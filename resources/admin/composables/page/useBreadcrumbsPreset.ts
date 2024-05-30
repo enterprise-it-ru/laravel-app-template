@@ -3,35 +3,17 @@ import { useBreadcrumbs } from './useBreadcrumbs'
 export const useBreadcrumbsPreset = () => {
   const { setItems, add } = useBreadcrumbs()
 
-  function catalog () {
+  function users () {
     setItems([
       {
-        name: 'Главная',
-        url: '/'
-      },
-      {
-        name: 'Каталог',
-        url: '/catalog/'
-      }
-    ])
-  }
-
-  function favourites () {
-    setItems([
-      {
-        name: 'Главная',
-        url: '/'
-      },
-      {
-        name: 'Избранное',
-        url: '/favourites/'
+        name: 'Пользователи',
+        url: '/admin/users/'
       }
     ])
   }
 
   return {
-    catalog,
-    favourites,
+    users,
     add
   }
 }

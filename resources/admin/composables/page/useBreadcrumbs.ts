@@ -12,13 +12,6 @@ export const useBreadcrumbs = () => {
     setItems([])
   }
 
-  function homePage () {
-    breadcrumbs.items.push({
-      name: 'Главная',
-      url: '/'
-    })
-  }
-
   function add (item: Breadcrumb) {
     breadcrumbs.items.push(item)
   }
@@ -27,7 +20,6 @@ export const useBreadcrumbs = () => {
     breadcrumbs,
     setItems,
     reset,
-    homePage,
     add
   }
 }

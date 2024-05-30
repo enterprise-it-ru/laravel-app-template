@@ -3,8 +3,9 @@ import AdminPageLayout from "../../components/Layout/AdminPageLayout.vue";
 import { usePage } from "../../composables/page/usePage";
 import { useHead } from '@unhead/vue'
 
-const { pageHeader } = usePage()
+const { pageHeader, breadcrumbsPreset } = usePage()
 
+breadcrumbsPreset.users()
 pageHeader.title = 'Пользователи'
 
 useHead({
