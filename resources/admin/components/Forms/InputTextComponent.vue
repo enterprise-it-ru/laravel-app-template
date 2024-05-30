@@ -117,6 +117,14 @@ const updateModelValue = useDebounceFn(() => {
 </template>
 
 <style lang="scss" scoped>
+.form-control {
+  --bs-box-shadow-inset: none;
+
+  &:focus {
+    border-color: var(--bs-primary)
+  }
+}
+
 .help {
   margin-top: 0.25rem;
 }

@@ -183,13 +183,14 @@ function multipleSelectLabel (value: any) {
   --ms-option-color-selected: #000;
   --ms-option-color-selected-pointed: #000;
   --ms-border-color: var(--bs-border-color);
-  --ms-py: 1.0625rem;
+  --ms-py: 0.4375rem;
   --ms-border-radius: 5px;
   --ms-radius: 5px;
   --ms-dropdown-border-color: var(--bs-border-color);
 
   .multiselect {
     &.is-active {
+      --ms-border-color: var(--bs-primary);
       box-shadow: none;
     }
 
