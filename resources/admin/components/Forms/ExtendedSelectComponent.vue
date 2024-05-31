@@ -109,6 +109,10 @@ const inputParams = reactive({
   elementId: props.id ? props.id : props.name,
   hasError: computed(() => !!props.error),
   errorMessage: computed(() => {
+    if(props?.error?.errors[props.name]) {
+      return props?.error?.errors[props.name].join(', ');
+    }
+
     if (Array.isArray(props.error)) {
       return props.error.join(',')
     }
