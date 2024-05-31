@@ -8,7 +8,7 @@ import useAsync from "../../composables/useAsync";
 import axios from "axios";
 import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
 import { UserListPage } from "../../types/Users";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 
@@ -25,6 +25,11 @@ interface FilterOptions {
 }
 
 const filterOptions = ref<FilterOptions>()
+const filter = reactive({
+  query: "",
+  active: null,
+  role: ""
+})
 
 const {run: getFilters} = useAsync(() => axios.get('/users/list-filters')
   .then((response) => {
@@ -35,7 +40,7 @@ getFilters()
 
 
 const pageData = ref<UserListPage>()
-const {loading, run: getUsers} = useAsync(() => axios.get('/users')
+const {loading, run: getUsers} = useAsync(() => axios.get('/users', {params: filter})
   .then((response) => {
     pageData.value = response.data
   })
@@ -50,27 +55,34 @@ getUsers()
     <div v-if="filterOptions" class="filter row mb-3">
       <div class="col-4">
         <input-text-component
+          v-model="filter.query"
+          :input-delay="500"
           name="query"
           label="Поиск"
           placeholder="Ведите запрос"
+          @update:model-value="getUsers()"
         />
       </div>
       <div class="col-2">
         <extended-select-component
+          v-model="filter.active"
           name="active"
           :options="filterOptions.active"
           label="Активность"
           placeholder="Активность"
           can-clear
+          @update:model-value="getUsers()"
         />
       </div>
       <div class="col-2">
         <extended-select-component
+          v-model="filter.role"
           name="active"
           :options="filterOptions.roles"
           label="Роль"
           placeholder="Выберите роль"
           can-clear
+          @update:model-value="getUsers()"
         />
       </div>
       <div class="col-auto flex-grow-1 text-end align-self-end">
@@ -109,7 +121,7 @@ getUsers()
           </tr>
         </template>
         <tr v-else>
-          <td colspan="9">
+          <td colspan="9" class="text-center">
             Список пуст
           </td>
         </tr>

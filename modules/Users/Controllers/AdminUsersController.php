@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Modules\Users\Controllers;
 
+use Modules\Users\DTO\AdminUserListFilterRequestDTO;
 use Modules\Users\Services\UsersService;
 
 class AdminUsersController
 {
-    public function index(UsersService $usersService): array
+    public function index(UsersService $usersService, AdminUserListFilterRequestDTO $filter): array
     {
-        // TODO: Add filter
-        return $usersService->getUserListWithPagination();
+        return $usersService->getUserListWithPagination($filter);
     }
 
     public function listFilters(): array
@@ -19,11 +19,11 @@ class AdminUsersController
         return [
             'active' => [
                 [
-                    'id'   => true,
+                    'id'   => 1,
                     'name' => 'Активен',
                 ],
                 [
-                    'id'   => false,
+                    'id'   => 0,
                     'name' => 'Заблокирован',
                 ],
             ],
