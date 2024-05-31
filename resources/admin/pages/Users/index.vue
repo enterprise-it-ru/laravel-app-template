@@ -9,6 +9,7 @@ import axios from "axios";
 import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
 import { UserListPage } from "../../types/Users";
 import { reactive, ref } from "vue";
+import LaravelPagination from "../../components/Pagination/LaravelPagination.vue";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 
@@ -40,7 +41,7 @@ getFilters()
 
 
 const pageData = ref<UserListPage>()
-const {loading, run: getUsers} = useAsync(() => axios.get('/users', {params: filter})
+const {loading, run: getUsers} = useAsync((page = 1) => axios.get('/users', {params: {...filter, page}})
   .then((response) => {
     pageData.value = response.data
   })
@@ -126,6 +127,7 @@ getUsers()
         </tr>
       </tbody>
     </table>
+    <laravel-pagination v-if="pageData" :data="pageData" @pagination-change-page="getUsers" />
   </admin-page-layout>
 </template>
 
