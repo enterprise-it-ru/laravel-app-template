@@ -45,7 +45,7 @@ const menu = [
       </router-link>
     </div>
 
-    <div class="sidebar-user border-bottom">
+    <div class="sidebar-user">
       <user-menu />
     </div>
 
@@ -73,16 +73,21 @@ const menu = [
 
 <style scoped lang="scss">
 .sidebar {
-  border-right: 1px solid var(--bs-gray-300);
+  border-right: 1px solid rgb(17 24 39 / 0.05);
+  background: #ffffff;
 }
 
 .sidebar-logo {
-  border-bottom: 1px solid var(--bs-gray-300);
+  border-bottom: 1px solid rgb(17 24 39 / 0.05);
   padding: 15px 20px 15px 20px;
 }
 
 .sidebar-menu {
   padding: 10px;
+}
+
+.sidebar-user {
+  border-bottom: 1px solid rgb(17 24 39 / 0.05);
 }
 
 .menu-item {

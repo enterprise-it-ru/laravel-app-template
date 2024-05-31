@@ -1,4 +1,8 @@
 .simple-table {
+  --bs-table-bg: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+
   th {
     font-size: 0.875rem;
     line-height: 1.25rem;

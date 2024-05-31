@@ -25,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     component: () => import('./pages/Users/index.vue')
   },
+  {
+    name: 'CreateUser',
+    path: '/admin/users/create',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./pages/Users/create.vue')
+  },
 ];
 
 const router = createRouter({

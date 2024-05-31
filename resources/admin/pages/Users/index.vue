@@ -7,7 +7,7 @@ import ExtendedSelectComponent from "../../components/Forms/ExtendedSelectCompon
 import useAsync from "../../composables/useAsync";
 import axios from "axios";
 import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
-import { UserListPage } from "../../types/Users";
+import { FilterOptions, UserListPage } from "../../types/Users";
 import { reactive, ref } from "vue";
 import LaravelPagination from "../../components/Pagination/LaravelPagination.vue";
 import { Bars3Icon } from "@heroicons/vue/24/outline"
@@ -21,18 +21,13 @@ useHead({
   title: 'Пользователи'
 })
 
-interface FilterOptions {
-  active: [],
-  roles: []
-}
-
-const filterOptions = ref<FilterOptions>()
 const filter = reactive({
   query: "",
   active: null,
   role: ""
 })
 
+const filterOptions = ref<FilterOptions>()
 const {run: getFilters} = useAsync(() => axios.get('/users/list-filters')
   .then((response) => {
     filterOptions.value = response.data
@@ -87,13 +82,13 @@ getUsers()
         />
       </div>
       <div class="col-auto flex-grow-1 text-end align-self-end">
-        <button class="btn btn-primary">
+        <router-link to="/admin/users/create" class="btn btn-primary">
           Добавить
-        </button>
+        </router-link>
       </div>
     </div>
     <preloader-component v-if="loading" class="mt-5" centered />
-    <table v-if="pageData && !loading" class="table simple-table table-hover table-borderless">
+    <table v-if="pageData && !loading" class="table simple-table table-hover table-borderless shadow-sm">
       <thead>
         <tr class="border-bottom">
           <th style="width: 1px;" />
@@ -147,6 +142,10 @@ getUsers()
 </template>
 
 <style scoped lang="scss">
+.filter {
+  --bs-body-bg: #fff;
+}
+
 .action-btn-column {
   padding: 0 0 0 8px;
 

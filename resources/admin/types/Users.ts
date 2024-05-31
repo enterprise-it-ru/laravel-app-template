@@ -17,3 +17,18 @@ export interface UserListPage {
   total: number
   per_page: number
 }
+
+export interface FilterActive {
+  id: number
+  name: string
+}
+
+export interface FilterRoles {
+  id: string
+  name: string
+}
+
+export interface FilterOptions {
+  active: FilterActive[],
+  roles: FilterRoles[]
+}
