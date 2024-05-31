@@ -15,6 +15,7 @@ import { createHead } from '@unhead/vue'
 import './scss/app.scss'
 
 import 'bootstrap';
+import 'floating-vue/dist/style.css'
 
 import {
   // Directives

@@ -10,6 +10,7 @@ import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
 import { UserListPage } from "../../types/Users";
 import { reactive, ref } from "vue";
 import LaravelPagination from "../../components/Pagination/LaravelPagination.vue";
+import { Bars3Icon } from "@heroicons/vue/24/outline"
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 
@@ -95,6 +96,7 @@ getUsers()
     <table v-if="pageData && !loading" class="table simple-table table-hover table-borderless">
       <thead>
         <tr class="border-bottom">
+          <th style="width: 1px;" />
           <th>#</th>
           <th>Имя</th>
           <th>Активность</th>
@@ -109,6 +111,19 @@ getUsers()
       <tbody>
         <template v-if="pageData.data.length > 0">
           <tr v-for="user of pageData.data" :key="user.id">
+            <td class="action-btn-column align-middle">
+              <v-dropdown>
+                <button class="btn btn-sm">
+                  <bars3-icon class="icon-24" />
+                </button>
+                <template #popper>
+                  <div class="list-group list-group-flush min-w-150p">
+                    <a href="#" class="list-group-item">Изменить</a>
+                    <a href="#" class="list-group-item text-danger">Удалить</a>
+                  </div>
+                </template>
+              </v-dropdown>
+            </td>
             <td>{{ user.id }}</td>
             <td>{{ user.name }}</td>
             <td>{{ user.active ? 'Да' : 'Нет' }}</td>
@@ -132,5 +147,12 @@ getUsers()
 </template>
 
 <style scoped lang="scss">
+.action-btn-column {
+  padding: 0 0 0 8px;
+
+  .btn {
+    --bs-btn-box-shadow: none;
+  }
+}
 
 </style>
