@@ -4,8 +4,13 @@ import { usePage } from "../../composables/page/usePage";
 import { useHead } from '@unhead/vue'
 import InputTextComponent from "../../components/Forms/InputTextComponent.vue";
 import ExtendedSelectComponent from "../../components/Forms/ExtendedSelectComponent.vue";
+import useAsync from "../../composables/useAsync";
+import axios from "axios";
+import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
+import { UserListPage } from "../../types/Users";
+import { ref } from "vue";
 
-const { pageHeader, breadcrumbsPreset } = usePage()
+const {pageHeader, breadcrumbsPreset} = usePage()
 
 breadcrumbsPreset.users()
 pageHeader.title = 'Пользователи'
@@ -14,68 +19,68 @@ useHead({
   title: 'Пользователи'
 })
 
-const filterOptions = [
-  {
-    id: 1,
-    name: 'Активен',
-  },
-  {
-    id: 2,
-    name: 'Блокирован',
-  }
-]
+interface FilterOptions {
+  active: [],
+  roles: []
+}
 
-const roles = [
-  {
-    id: 1,
-    name: 'Администратор',
-  },
-  {
-    id: 2,
-    name: 'Пользователь',
-  }
-]
+const filterOptions = ref<FilterOptions>()
+
+const {run: getFilters} = useAsync(() => axios.get('/users/list-filters')
+  .then((response) => {
+    filterOptions.value = response.data
+  })
+)
+getFilters()
+
+
+const pageData = ref<UserListPage>()
+const {loading, run: getUsers} = useAsync(() => axios.get('/users')
+  .then((response) => {
+    pageData.value = response.data
+  })
+)
+getUsers()
 
 </script>
 
 <template>
   <admin-page-layout>
-    <div class="filter mb-3">
-      <div class="row">
-        <div class="col-4">
-          <input-text-component
-            name="query"
-            label="Поиск"
-            placeholder="Ведите запрос"
-          />
-        </div>
-        <div class="col-2">
-          <extended-select-component
-            name="active"
-            :options="filterOptions"
-            label="Активность"
-            placeholder="Активность"
-            can-clear
-          />
-        </div>
-        <div class="col-2">
-          <extended-select-component
-            name="active"
-            :options="roles"
-            label="Роль"
-            placeholder="Выберите роль"
-            can-clear
-          />
-        </div>
-        <div class="col-auto flex-grow-1 text-end align-self-end">
-          <button class="btn btn-primary">
-            Добавить
-          </button>
-        </div>
+    <preloader-component v-if="loading" />
+    <div v-if="filterOptions" class="filter row mb-3">
+      <div class="col-4">
+        <input-text-component
+          name="query"
+          label="Поиск"
+          placeholder="Ведите запрос"
+        />
+      </div>
+      <div class="col-2">
+        <extended-select-component
+          name="active"
+          :options="filterOptions.active"
+          label="Активность"
+          placeholder="Активность"
+          can-clear
+        />
+      </div>
+      <div class="col-2">
+        <extended-select-component
+          name="active"
+          :options="filterOptions.roles"
+          label="Роль"
+          placeholder="Выберите роль"
+          can-clear
+        />
+      </div>
+      <div class="col-auto flex-grow-1 text-end align-self-end">
+        <button class="btn btn-primary">
+          Добавить
+        </button>
       </div>
     </div>
 
-    <table class="table simple-table table-hover table-borderless">
+    <table v-if="pageData" class="table simple-table table-hover table-borderless">
       <thead>
         <tr class="border-bottom">
           <th>#</th>
@@ -90,60 +95,23 @@ const roles = [
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Админов Админ Админович</td>
-          <td>Yes</td>
-          <td>email@example.com</td>
-          <td>Администратор</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>Система</td>
-          <td>Система</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Админов Админ Админович</td>
-          <td>Yes</td>
-          <td>email@example.com</td>
-          <td>Администратор</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>Система</td>
-          <td>Система</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Админов Админ Админович</td>
-          <td>Yes</td>
-          <td>email@example.com</td>
-          <td>Администратор</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>Система</td>
-          <td>Система</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Админов Админ Админович</td>
-          <td>Yes</td>
-          <td>email@example.com</td>
-          <td>Администратор</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>Система</td>
-          <td>Система</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Админов Админ Админович</td>
-          <td>Yes</td>
-          <td>email@example.com</td>
-          <td>Администратор</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>31.01.2024 14:45:34</td>
-          <td>Система</td>
-          <td>Система</td>
+        <template v-if="pageData.data.length > 0">
+          <tr v-for="user of pageData.data" :key="user.id">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.active ? 'Да' : 'Нет' }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.createdAt }}</td>
+            <td>{{ user.updatedAt }}</td>
+            <td>{{ user.createdBy }}</td>
+            <td>{{ user.updatedBy }}</td>
+          </tr>
+        </template>
+        <tr v-else>
+          <td colspan="9">
+            Список пуст
+          </td>
         </tr>
       </tbody>
     </table>
