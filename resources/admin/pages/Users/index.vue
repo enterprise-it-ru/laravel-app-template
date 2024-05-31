@@ -51,7 +51,6 @@ getUsers()
 
 <template>
   <admin-page-layout>
-    <preloader-component v-if="loading" />
     <div v-if="filterOptions" class="filter row mb-3">
       <div class="col-4">
         <input-text-component
@@ -91,8 +90,8 @@ getUsers()
         </button>
       </div>
     </div>
-
-    <table v-if="pageData" class="table simple-table table-hover table-borderless">
+    <preloader-component v-if="loading" class="mt-5" centered />
+    <table v-if="pageData && !loading" class="table simple-table table-hover table-borderless">
       <thead>
         <tr class="border-bottom">
           <th>#</th>
