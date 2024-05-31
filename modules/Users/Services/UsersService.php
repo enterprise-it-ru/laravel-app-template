@@ -13,7 +13,7 @@ class UsersService
     {
         $users = User::query()->paginate();
 
-        $users->through(fn($item) => new AdminUserListItemDTO(
+        $users->through(fn(User $item) => new AdminUserListItemDTO(
             $item->id,
             $item->name,
             true,
@@ -21,8 +21,8 @@ class UsersService
             'admin',
             $item->created_at->format('Y-m-d H:i:s'),
             $item->updated_at->format('Y-m-d H:i:s'),
-            '',
-            ''
+            $item->createdBy ? $item->createdBy->name : null,
+            $item->updatedBy ? $item->updatedBy->name : null
         ));
 
         return $users->toArray();

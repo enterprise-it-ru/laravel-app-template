@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Modules\Users\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\System\Database\CreatedByTrait;
 
 class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use CreatedByTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -44,4 +47,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function createdBy(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function updatedBy(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'updated_by');
+    }
 }

@@ -14,10 +14,10 @@ class AdminUserListItemDTO extends Data
         public bool $active,
         public string $email,
         public string $role,
-        public string $createdAt,
-        public string $updatedAt,
-        public string $createdBy,
-        public string $updatedBy,
+        public ?string $createdAt,
+        public ?string $updatedAt,
+        public ?string $createdBy,
+        public ?string $updatedBy,
     ) {
     }
 }
