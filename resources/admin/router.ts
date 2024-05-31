@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('./pages/login.vue')
   },
   {
-    name: 'Login',
+    name: 'Users',
     path: '/admin/users',
     meta: {
       requiresAuth: true,

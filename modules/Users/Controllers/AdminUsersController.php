@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Users\Controllers;
 
+use Modules\Users\DTO\AdminCreateUserRequestDTO;
 use Modules\Users\DTO\AdminUserListFilterRequestDTO;
 use Modules\Users\Services\UsersService;
 
@@ -38,5 +39,11 @@ class AdminUsersController
                 ],
             ],
         ];
+    }
+
+    public function create(AdminCreateUserRequestDTO $createUserRequestDTO)
+    {
+        dd($createUserRequestDTO);
+        return [];
     }
 }
