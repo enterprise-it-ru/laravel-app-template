@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Users\DTO\Request\AdminAuthFormRequestDTO;
+use Modules\Users\DTO\Response\CurrentUserResponseDTO;
 
 class AdminAuthController
 {
@@ -21,11 +22,16 @@ class AdminAuthController
         }
     }
 
-    public function getCurrentAuth(): array
+    public function getCurrentAuth(): CurrentUserResponseDTO | array
     {
         $user = Auth::user();
         if ($user) {
-            return ['id' => $user->id, 'name' => $user->name, 'email' => $user->email];
+            return new CurrentUserResponseDTO(
+                $user->id,
+                $user->name,
+                $user->email,
+                $user->role === 'admin',
+            );
         }
         return ['id' => null];
     }

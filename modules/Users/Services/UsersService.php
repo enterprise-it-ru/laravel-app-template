@@ -29,7 +29,7 @@ class UsersService
                 $query->where('active', '=', 0)->orWhereNull('active');
             })
             ->when($filter->role, function (Builder $query) use ($filter) {
-                // TODO: add role
+                $query->where('role', '=', $filter->role);
             })
             ->with(['updatedBy', 'createdBy'])
             ->paginate();
@@ -39,7 +39,7 @@ class UsersService
             $item->name,
             (bool) $item->active,
             $item->email,
-            'admin',
+            $item->role_name,
             $item->created_at->format('Y-m-d H:i:s'),
             $item->updated_at->format('Y-m-d H:i:s'),
             $item->createdBy ? $item->createdBy->name : null,
@@ -54,9 +54,10 @@ class UsersService
         return User::query()->create(
             [
                 'name'     => $createUserRequestDTO->name,
+                'role'     => $createUserRequestDTO->role,
                 'email'    => $createUserRequestDTO->email,
                 'password' => Hash::make($createUserRequestDTO->password),
-                'active' => $createUserRequestDTO->active
+                'active'   => $createUserRequestDTO->active,
             ]
         );
     }
@@ -66,6 +67,7 @@ class UsersService
         $user = User::query()->findOrFail($requestDTO->id);
 
         $user->active = $requestDTO->active;
+        $user->role = $requestDTO->role;
         $user->name = $requestDTO->name;
         $user->email = $requestDTO->email;
         if ($requestDTO->password) {

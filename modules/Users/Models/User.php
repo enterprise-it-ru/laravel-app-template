@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Users\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'role',
         'active',
         'email',
         'password',
@@ -58,5 +60,15 @@ class User extends Authenticatable
     public function updatedBy(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'updated_by');
+    }
+
+    public function roleName(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $roles = config('roles.roles_list');
+                return $roles[$this->role] ?? '';
+            },
+        );
     }
 }

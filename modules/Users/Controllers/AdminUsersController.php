@@ -64,7 +64,7 @@ class AdminUsersController
             (bool) $user->active,
             $user->name,
             $user->email,
-            'admin'
+            $user->role
         );
     }
 }
