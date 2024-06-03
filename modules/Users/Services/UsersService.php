@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Modules\Users\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
+use Modules\Users\DTO\AdminCreateUserRequestDTO;
 use Modules\Users\DTO\AdminUserListFilterRequestDTO;
 use Modules\Users\DTO\AdminUserListItemDTO;
 use Modules\Users\Models\User;
@@ -39,5 +41,16 @@ class UsersService
         ));
 
         return $users->toArray();
+    }
+
+    public function create(AdminCreateUserRequestDTO $createUserRequestDTO): User
+    {
+        return User::query()->create(
+            [
+                'name'     => $createUserRequestDTO->name,
+                'email'    => $createUserRequestDTO->email,
+                'password' => Hash::make($createUserRequestDTO->password),
+            ]
+        );
     }
 }

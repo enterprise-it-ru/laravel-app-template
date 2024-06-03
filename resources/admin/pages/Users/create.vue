@@ -8,8 +8,11 @@ import CheckboxComponent from "../../components/Forms/CheckboxComponent.vue";
 import ExtendedSelectComponent from "../../components/Forms/ExtendedSelectComponent.vue";
 import useAsync from "../../composables/useAsync";
 import axios from "axios";
+import { useNotifications } from "../../composables/useNotifications";
+import { useRouter } from "vue-router";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
+const router = useRouter()
 
 breadcrumbsPreset.users()
 pageHeader.title = 'Добавить пользователя'
@@ -39,9 +42,11 @@ const formParams = ref({
   ]
 })
 
-const {loading, run: sendForm, validationErrors} = useAsync((page = 1) => axios.post('/users/create', {params: form})
+const notifications = useNotifications()
+const {loading, run: sendForm, validationErrors} = useAsync(() => axios.post('/users/create', form)
   .then((response) => {
-    console.log(response)
+    notifications.success('Пользователь #' + response.data.id + ' успешно добавлен')
+    router.push('/admin/users')
   })
 )
 
@@ -62,7 +67,7 @@ const {loading, run: sendForm, validationErrors} = useAsync((page = 1) => axios.
               />
               <input-text-component
                 v-model="form.name"
-                :error="validationErrors"
+                :error="validationErrors?.errors?.name"
                 name="name"
                 label="Имя"
                 required
@@ -70,7 +75,7 @@ const {loading, run: sendForm, validationErrors} = useAsync((page = 1) => axios.
               />
               <input-text-component
                 v-model="form.email"
-                :error="validationErrors"
+                :error="validationErrors?.errors?.email"
                 name="email"
                 label="E-mail"
                 required
@@ -78,7 +83,7 @@ const {loading, run: sendForm, validationErrors} = useAsync((page = 1) => axios.
               />
               <extended-select-component
                 v-model="form.role"
-                :error="validationErrors"
+                :error="validationErrors?.errors?.role"
                 name="role"
                 :options="formParams.roles"
                 label="Роль"
@@ -87,7 +92,7 @@ const {loading, run: sendForm, validationErrors} = useAsync((page = 1) => axios.
               />
               <input-text-component
                 v-model="form.password"
-                :error="validationErrors"
+                :error="validationErrors?.errors?.password"
                 name="password"
                 label="Пароль"
                 type="password"

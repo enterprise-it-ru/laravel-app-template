@@ -41,9 +41,9 @@ class AdminUsersController
         ];
     }
 
-    public function create(AdminCreateUserRequestDTO $createUserRequestDTO)
+    public function create(AdminCreateUserRequestDTO $createUserRequestDTO, UsersService $usersService): array
     {
-        dd($createUserRequestDTO);
-        return [];
+        $createdUser = $usersService->create($createUserRequestDTO);
+        return ['success' => true, 'id' => $createdUser->id];
     }
 }
