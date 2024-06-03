@@ -45,6 +45,13 @@ const formParams = ref({
   ]
 })
 
+const {run: getFormParams} = useAsync(() => axios.get('/users/get-form-params/')
+  .then((response) => {
+    formParams.value = response.data;
+  })
+)
+getFormParams()
+
 const notifications = useNotifications()
 const postUrl = route.params.id ? '/users/update' : '/users/create';
 const {loading, run: sendForm, validationErrors} = useAsync(() => axios.post(postUrl, form)
@@ -65,7 +72,6 @@ const {loading: loadingForm, run: getEditForm} = useAsync(() => axios.get('/user
     form.email = response.data.email;
     form.active = response.data.active;
     form.role = response.data.role;
-    console.log(response)
   })
 )
 

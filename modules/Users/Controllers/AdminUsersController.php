@@ -61,7 +61,19 @@ class AdminUsersController
             (bool) $user->active,
             $user->name,
             $user->email,
-            $user->role
+            (string) $user->role
         );
+    }
+
+    public function getFormParams(): array
+    {
+        $roles = [];
+        $rolesConfig = config('roles.roles_list', []);
+        foreach ($rolesConfig as $key => $item) {
+            $roles[] = ['id' => $key, 'name' => $item];
+        }
+        return [
+            'roles' => $roles,
+        ];
     }
 }
