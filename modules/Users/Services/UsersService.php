@@ -22,10 +22,10 @@ class UsersService
                     ->orWhere('email', 'like', '%' . $filter->query . '%')
                     ->orWhere('id', '=', $filter->query);
             })
-            ->when($filter->active === true, function (Builder $query) use ($filter) {
+            ->when($filter->active === true, function (Builder $query) {
                 $query->where('active', '=', 1);
             })
-            ->when($filter->active === false, function (Builder $query) use ($filter) {
+            ->when($filter->active === false, function (Builder $query) {
                 $query->where('active', '=', 0)->orWhereNull('active');
             })
             ->when($filter->role, function (Builder $query) use ($filter) {
