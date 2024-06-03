@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Modules\Users\Controllers;
 
 use Modules\Users\DTO\AdminCreateUserRequestDTO;
+use Modules\Users\DTO\AdminEditUserResponseDTO;
+use Modules\Users\DTO\AdminUpdateUserRequestDTO;
 use Modules\Users\DTO\AdminUserListFilterRequestDTO;
+use Modules\Users\Models\User;
 use Modules\Users\Services\UsersService;
 
 class AdminUsersController
@@ -45,5 +48,23 @@ class AdminUsersController
     {
         $createdUser = $usersService->create($createUserRequestDTO);
         return ['success' => true, 'id' => $createdUser->id];
+    }
+
+    public function update(AdminUpdateUserRequestDTO $requestDTO, UsersService $usersService): array
+    {
+        $createdUser = $usersService->update($requestDTO);
+        return ['success' => true, 'id' => $createdUser->id];
+    }
+
+    public function editUserFormData(int $id): AdminEditUserResponseDTO
+    {
+        $user = User::query()->findOrFail($id);
+        return new AdminEditUserResponseDTO(
+            $user->id,
+            true,
+            $user->name,
+            $user->email,
+            'admin'
+        );
     }
 }

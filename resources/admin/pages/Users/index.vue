@@ -113,7 +113,9 @@ getUsers()
                 </button>
                 <template #popper>
                   <div class="list-group list-group-flush min-w-150p">
-                    <a href="#" class="list-group-item">Изменить</a>
+                    <router-link :to="{name: 'EditUser', params: {id: user.id}}" class="list-group-item">
+                      Изменить
+                    </router-link>
                     <a href="#" class="list-group-item text-danger">Удалить</a>
                   </div>
                 </template>

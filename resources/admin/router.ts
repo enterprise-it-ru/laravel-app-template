@@ -31,7 +31,15 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       requiresAuth: true,
     },
-    component: () => import('./pages/Users/create.vue')
+    component: () => import('./pages/Users/UserForm.vue')
+  },
+  {
+    name: 'EditUser',
+    path: '/admin/users/edit/:id',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./pages/Users/UserForm.vue')
   },
 ];
 

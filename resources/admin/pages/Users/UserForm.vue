@@ -9,10 +9,12 @@ import ExtendedSelectComponent from "../../components/Forms/ExtendedSelectCompon
 import useAsync from "../../composables/useAsync";
 import axios from "axios";
 import { useNotifications } from "../../composables/useNotifications";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 const router = useRouter()
+const route = useRoute()
 
 breadcrumbsPreset.users()
 pageHeader.title = 'Добавить пользователя'
@@ -22,6 +24,7 @@ useHead({
 })
 
 const form = reactive({
+  id: null,
   name: '',
   email: '',
   active: true,
@@ -43,19 +46,41 @@ const formParams = ref({
 })
 
 const notifications = useNotifications()
-const {loading, run: sendForm, validationErrors} = useAsync(() => axios.post('/users/create', form)
+const postUrl = route.params.id ? '/users/update' : '/users/create';
+const {loading, run: sendForm, validationErrors} = useAsync(() => axios.post(postUrl, form)
   .then((response) => {
-    notifications.success('Пользователь #' + response.data.id + ' успешно добавлен')
+    if (route.params.id) {
+      notifications.success('Пользователь #' + response.data.id + ' успешно обновлен')
+    } else {
+      notifications.success('Пользователь #' + response.data.id + ' успешно добавлен')
+    }
     router.push('/admin/users')
   })
 )
+
+const {loading: loadingForm, run: getEditForm} = useAsync(() => axios.get('/users/get-user-form/' + route.params.id)
+  .then((response) => {
+    form.id = response.data.id;
+    form.name = response.data.name;
+    form.email = response.data.email;
+    form.active = response.data.active;
+    form.role = response.data.role;
+    console.log(response)
+  })
+)
+
+if(route.params.id) {
+  // Get user edit form
+  getEditForm()
+}
 
 </script>
 
 <template>
   <admin-page-layout>
     <form action="#" @submit.prevent="sendForm">
-      <div class="row">
+      <preloader-component v-if="loadingForm" />
+      <div v-else class="row">
         <div class="col-md-5">
           <div class="card form-card shadow-sm">
             <div class="card-body">
@@ -96,9 +121,11 @@ const {loading, run: sendForm, validationErrors} = useAsync(() => axios.post('/u
                 name="password"
                 label="Пароль"
                 type="password"
-                required
-                class="mb-2"
               />
+              <div class="mb-2">
+                <span v-if="route.params.id" class="text-secondary small">Заполняется только если нужно изменить пароль</span>
+              </div>
+
               <div class="mt-4">
                 <button :disabled="loading" type="submit" class="btn btn-primary me-2">
                   <span v-if="loading" class="spinner-border spinner-border-sm" aria-hidden="true" />

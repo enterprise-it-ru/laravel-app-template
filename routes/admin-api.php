@@ -16,4 +16,6 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/', [AdminUsersController::class, 'index'])->name('admin-auth.users.index');
     Route::get('/list-filters', [AdminUsersController::class, 'listFilters'])->name('admin-auth.users.list-filters');
     Route::post('/create', [AdminUsersController::class, 'create'])->name('admin-auth.users.create');
+    Route::post('/update', [AdminUsersController::class, 'update'])->name('admin-auth.users.update');
+    Route::get('/get-user-form/{id}', [AdminUsersController::class, 'editUserFormData'])->name('admin-auth.users.edit-user-form');
 });

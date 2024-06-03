@@ -7,6 +7,7 @@ namespace Modules\Users\Services;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Modules\Users\DTO\AdminCreateUserRequestDTO;
+use Modules\Users\DTO\AdminUpdateUserRequestDTO;
 use Modules\Users\DTO\AdminUserListFilterRequestDTO;
 use Modules\Users\DTO\AdminUserListItemDTO;
 use Modules\Users\Models\User;
@@ -52,5 +53,19 @@ class UsersService
                 'password' => Hash::make($createUserRequestDTO->password),
             ]
         );
+    }
+
+    public function update(AdminUpdateUserRequestDTO $requestDTO): User
+    {
+        $user = User::query()->findOrFail($requestDTO->id);
+
+        $user->name = $requestDTO->name;
+        $user->email = $requestDTO->email;
+        if ($requestDTO->password) {
+            $user->password = Hash::make($requestDTO->password);
+        }
+        $user->save();
+
+        return $user;
     }
 }
