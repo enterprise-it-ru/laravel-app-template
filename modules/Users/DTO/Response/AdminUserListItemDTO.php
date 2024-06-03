@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Users\DTO;
+namespace Modules\Users\DTO\Response;
 
 use Spatie\LaravelData\Data;
 

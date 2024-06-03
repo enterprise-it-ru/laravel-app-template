@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Users\DTO;
+namespace Modules\Users\DTO\Request;
 
 use Spatie\LaravelData\Attributes\Validation\Email;
 use Spatie\LaravelData\Attributes\Validation\Max;

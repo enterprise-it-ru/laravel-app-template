@@ -7,7 +7,7 @@ namespace Modules\Users\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Modules\Users\DTO\AdminAuthFormRequestDTO;
+use Modules\Users\DTO\Request\AdminAuthFormRequestDTO;
 
 class AdminAuthController
 {

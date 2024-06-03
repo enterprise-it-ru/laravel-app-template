@@ -6,10 +6,10 @@ namespace Modules\Users\Services;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
-use Modules\Users\DTO\AdminCreateUserRequestDTO;
-use Modules\Users\DTO\AdminUpdateUserRequestDTO;
-use Modules\Users\DTO\AdminUserListFilterRequestDTO;
-use Modules\Users\DTO\AdminUserListItemDTO;
+use Modules\Users\DTO\Request\AdminCreateUserRequestDTO;
+use Modules\Users\DTO\Request\AdminUpdateUserRequestDTO;
+use Modules\Users\DTO\Request\AdminUserListFilterRequestDTO;
+use Modules\Users\DTO\Response\AdminUserListItemDTO;
 use Modules\Users\Models\User;
 
 class UsersService

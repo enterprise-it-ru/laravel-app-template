@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Users\DTO;
+namespace Modules\Users\DTO\Request;
 
 use Illuminate\Validation\Rule;
 use Spatie\LaravelData\Data;

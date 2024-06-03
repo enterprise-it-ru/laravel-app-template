@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Modules\Users\Controllers;
 
-use Modules\Users\DTO\AdminCreateUserRequestDTO;
-use Modules\Users\DTO\AdminEditUserResponseDTO;
-use Modules\Users\DTO\AdminUpdateUserRequestDTO;
-use Modules\Users\DTO\AdminUserListFilterRequestDTO;
+use Modules\Users\DTO\Request\AdminCreateUserRequestDTO;
+use Modules\Users\DTO\Request\AdminUpdateUserRequestDTO;
+use Modules\Users\DTO\Request\AdminUserListFilterRequestDTO;
+use Modules\Users\DTO\Response\AdminEditUserResponseDTO;
 use Modules\Users\Models\User;
 use Modules\Users\Services\UsersService;
 
