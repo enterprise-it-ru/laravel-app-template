@@ -1,8 +1,26 @@
 <script setup lang="ts">
 import { useModal } from "../../composables/useModal";
 import {ExclamationTriangleIcon} from '@heroicons/vue/24/outline'
+import useAsync from "../../composables/useAsync";
+import axios from "axios";
+import { useNotifications } from "../../composables/useNotifications";
 
 const modal = useModal()
+const props = defineProps<{
+  modelValue: {
+    id: number
+    userDeleted: () => void
+  }
+}>()
+
+const notifications = useNotifications()
+const {loading, run: deleteUser} = useAsync(() => axios.post('/users/delete/' + props.modelValue.id)
+  .then(() => {
+    notifications.success('Пользователь #' + props.modelValue.id + ' успешно удален')
+    modal.close();
+    props.modelValue.userDeleted()
+  })
+)
 
 </script>
 
@@ -24,7 +42,7 @@ const modal = useModal()
         <button class="btn btn-outline-secondary me-2" @click.prevent="modal.close()">
           Отмена
         </button>
-        <button class="btn btn-primary">
+        <button :disabled="loading" class="btn btn-danger" @click.prevent="deleteUser">
           Подтвердить
         </button>
       </div>

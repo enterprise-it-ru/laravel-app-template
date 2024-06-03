@@ -52,7 +52,12 @@ function confirmDeleteUser(userId: number) {
   modal.open({
     component: ConfirmUserDeletionModal,
     classes: '',
-    modelValue: {name: 'Test Name', userId}
+    modelValue: {
+      id: userId,
+      userDeleted: () => {
+        getUsers()
+      }
+    }
   })
 }
 

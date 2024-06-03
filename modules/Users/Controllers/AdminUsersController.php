@@ -76,4 +76,11 @@ class AdminUsersController
             'roles' => $roles,
         ];
     }
+
+    public function delete(int $id): array
+    {
+        $user = User::query()->findOrFail($id);
+        $user->delete();
+        return ['success' => true];
+    }
 }

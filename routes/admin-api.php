@@ -19,4 +19,5 @@ Route::group(['prefix' => 'users', 'middleware' => ['auth:web', 'can:is-admin']]
     Route::post('/update', [AdminUsersController::class, 'update'])->name('admin-auth.users.update');
     Route::get('/get-user-form/{id}', [AdminUsersController::class, 'editUserFormData'])->name('admin-auth.users.edit-user-form');
     Route::get('/get-form-params', [AdminUsersController::class, 'getFormParams'])->name('admin-auth.users.get-form-params');
+    Route::post('/delete/{id}', [AdminUsersController::class, 'delete'])->name('admin-auth.users.delete');
 });
