@@ -47,10 +47,6 @@ const inputParams = reactive({
   hasBefore: computed(() => !!slots.before),
   hasAfter: computed(() => !!slots.after),
   errorMessage: computed(() => {
-    if(props?.error?.errors[props.name]) {
-      return props?.error?.errors[props.name].join(', ');
-    }
-
     if (Array.isArray(props.error)) {
       return props.error.join(',')
     }
