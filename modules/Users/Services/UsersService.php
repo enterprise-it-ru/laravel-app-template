@@ -19,20 +19,25 @@ class UsersService
         $users = User::query()
             ->when($filter->query, function (Builder $query) use ($filter) {
                 return $query->where('name', 'like', '%' . $filter->query . '%')
-                    ->orWhere('email', 'like', '%' . $filter->query . '%');
+                    ->orWhere('email', 'like', '%' . $filter->query . '%')
+                    ->orWhere('id', '=', $filter->query);
             })
-            ->when($filter->active, function (Builder $query) use ($filter) {
-                // TODO: add active
+            ->when($filter->active === true, function (Builder $query) use ($filter) {
+                $query->where('active', '=', 1);
+            })
+            ->when($filter->active === false, function (Builder $query) use ($filter) {
+                $query->where('active', '=', 0)->orWhereNull('active');
             })
             ->when($filter->role, function (Builder $query) use ($filter) {
                 // TODO: add role
             })
+            ->with(['updatedBy', 'createdBy'])
             ->paginate();
 
         $users->through(fn(User $item) => new AdminUserListItemDTO(
             $item->id,
             $item->name,
-            true,
+            (bool) $item->active,
             $item->email,
             'admin',
             $item->created_at->format('Y-m-d H:i:s'),
@@ -51,6 +56,7 @@ class UsersService
                 'name'     => $createUserRequestDTO->name,
                 'email'    => $createUserRequestDTO->email,
                 'password' => Hash::make($createUserRequestDTO->password),
+                'active' => $createUserRequestDTO->active
             ]
         );
     }
@@ -59,6 +65,7 @@ class UsersService
     {
         $user = User::query()->findOrFail($requestDTO->id);
 
+        $user->active = $requestDTO->active;
         $user->name = $requestDTO->name;
         $user->email = $requestDTO->email;
         if ($requestDTO->password) {

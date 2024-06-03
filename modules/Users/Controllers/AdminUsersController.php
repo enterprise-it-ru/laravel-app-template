@@ -61,7 +61,7 @@ class AdminUsersController
         $user = User::query()->findOrFail($id);
         return new AdminEditUserResponseDTO(
             $user->id,
-            true,
+            (bool) $user->active,
             $user->name,
             $user->email,
             'admin'

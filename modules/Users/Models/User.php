@@ -25,6 +25,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'active',
         'email',
         'password',
     ];
@@ -46,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'active'            => 'boolean',
     ];
 
     public function createdBy(): HasOne
