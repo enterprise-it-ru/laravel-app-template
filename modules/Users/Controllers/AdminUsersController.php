@@ -20,6 +20,12 @@ class AdminUsersController
 
     public function listFilters(): array
     {
+        $roles = [];
+        $rolesConfig = config('roles.roles_list', []);
+        foreach ($rolesConfig as $key => $item) {
+            $roles[] = ['id' => $key, 'name' => $item];
+        }
+
         return [
             'active' => [
                 [
@@ -31,16 +37,7 @@ class AdminUsersController
                     'name' => 'Заблокирован',
                 ],
             ],
-            'roles'  => [
-                [
-                    'id'   => 'admin',
-                    'name' => 'Администратор',
-                ],
-                [
-                    'id'   => 'user',
-                    'name' => 'Пользователь',
-                ],
-            ],
+            'roles'  => $roles,
         ];
     }
 
