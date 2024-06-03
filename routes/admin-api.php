@@ -8,11 +8,11 @@ use Modules\Users\Controllers\AdminUsersController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin-auth.login');
-    Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin-auth.logout');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])->middleware('auth:web')->name('admin-auth.logout');
     Route::get('/check-auth', [AdminAuthController::class, 'getCurrentAuth'])->name('admin-auth.currentAuth');
 });
 
-Route::group(['prefix' => 'users'], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['auth:web', 'can:is-admin']], function () {
     Route::get('/', [AdminUsersController::class, 'index'])->name('admin-auth.users.index');
     Route::get('/list-filters', [AdminUsersController::class, 'listFilters'])->name('admin-auth.users.list-filters');
     Route::post('/create', [AdminUsersController::class, 'create'])->name('admin-auth.users.create');
