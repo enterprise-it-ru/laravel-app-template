@@ -13,7 +13,7 @@ class AdminAuthController
 {
     public function login(AdminAuthFormRequestDTO $form, Request $request): JsonResponse
     {
-        if (Auth::attempt(['email' => $form->email, 'password' => $form->password], $form->remember)) {
+        if (Auth::attempt(['email' => $form->email, 'password' => $form->password, 'active' => 1], $form->remember)) {
             $request->session()->regenerate();
             return new JsonResponse(['id' => Auth::user()->id]);
         } else {
