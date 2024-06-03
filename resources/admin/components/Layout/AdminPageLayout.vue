@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SidebarComponent from "../Common/SidebarComponent.vue";
 import HeaderComponent from "../Common/HeaderComponent.vue";
+import ModalComponent from "../Common/ModalComponent.vue";
 
 </script>
 
@@ -10,6 +11,9 @@ import HeaderComponent from "../Common/HeaderComponent.vue";
     <div class="content-column flex-grow-0">
       <header-component />
       <slot />
+      <div>
+        <modal-component />
+      </div>
     </div>
   </div>
 </template>

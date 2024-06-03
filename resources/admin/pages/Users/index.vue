@@ -11,6 +11,8 @@ import { FilterOptions, UserListPage } from "../../types/Users";
 import { reactive, ref } from "vue";
 import LaravelPagination from "../../components/Pagination/LaravelPagination.vue";
 import { Bars3Icon } from "@heroicons/vue/24/outline"
+import { useModal } from "../../composables/useModal";
+import ConfirmUserDeletionModal from "../../components/Modals/ConfirmUserDeletionModal.vue";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 
@@ -43,6 +45,16 @@ const {loading, run: getUsers} = useAsync((page = 1) => axios.get('/users', {par
   })
 )
 getUsers()
+
+const modal = useModal()
+
+function confirmDeleteUser(userId: number) {
+  modal.open({
+    component: ConfirmUserDeletionModal,
+    classes: '',
+    modelValue: {name: 'Test Name', userId}
+  })
+}
 
 </script>
 
@@ -116,7 +128,7 @@ getUsers()
                     <router-link :to="{name: 'EditUser', params: {id: user.id}}" class="list-group-item">
                       Изменить
                     </router-link>
-                    <a href="#" class="list-group-item text-danger">Удалить</a>
+                    <a v-close-popper href="#" class="list-group-item text-danger" @click.prevent="confirmDeleteUser(user.id)">Удалить</a>
                   </div>
                 </template>
               </v-dropdown>
