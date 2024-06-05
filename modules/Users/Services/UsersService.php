@@ -18,9 +18,11 @@ class UsersService
     {
         $users = User::query()
             ->when($filter->query, function (Builder $query) use ($filter) {
-                return $query->where('name', 'like', '%' . $filter->query . '%')
-                    ->orWhere('email', 'like', '%' . $filter->query . '%')
-                    ->orWhere('id', '=', $filter->query);
+                $query->where(function (Builder $query) use ($filter) {
+                    $query->where('name', 'like', '%' . $filter->query . '%')
+                        ->orWhere('email', 'like', '%' . $filter->query . '%')
+                        ->orWhere('id', '=', $filter->query);
+                });
             })
             ->when($filter->active === true, function (Builder $query) {
                 $query->where('active', '=', 1);
