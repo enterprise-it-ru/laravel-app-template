@@ -13,8 +13,10 @@ import LaravelPagination from "../../components/Pagination/LaravelPagination.vue
 import { Bars3Icon } from "@heroicons/vue/24/outline"
 import { useModal } from "../../composables/useModal";
 import ConfirmUserDeletionModal from "../../components/Modals/ConfirmUserDeletionModal.vue";
+import { useRouter } from "vue-router";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
+const router = useRouter()
 
 breadcrumbsPreset.users()
 pageHeader.title = 'Пользователи'
@@ -122,8 +124,13 @@ function confirmDeleteUser(userId: number) {
       </thead>
       <tbody>
         <template v-if="pageData.data.length > 0">
-          <tr v-for="user of pageData.data" :key="user.id">
-            <td class="action-btn-column align-middle">
+          <tr
+            v-for="user of pageData.data"
+            :key="user.id"
+            class="cursor-pointer"
+            @click="router.push({name: 'EditUser', params: {id: user.id}})"
+          >
+            <td class="action-btn-column align-middle" @click.stop>
               <v-dropdown>
                 <button class="btn btn-sm">
                   <bars3-icon class="icon-24" />
