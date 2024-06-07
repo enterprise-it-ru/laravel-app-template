@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Database\Factories\Modules\Users\Models;
+namespace Modules\Users\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -14,15 +14,12 @@ use Modules\Users\Models\User;
  */
 class UserFactory extends Factory
 {
+    protected $model = User::class;
+
     /**
      * The current password being used by the factory.
      */
     protected static ?string $password;
-
-    protected static function appNamespace(): string
-    {
-        return 'Modules\\Users\\Models\\';
-    }
 
     /**
      * Define the model's default state.
@@ -32,11 +29,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'              => fake()->name(),
-            'email'             => fake()->unique()->safeEmail(),
+            'name'              => $this->faker->name(),
+            'active'            => $this->faker->boolean(),
+            'role'              => $this->faker->randomElement(['admin', 'user']),
+            'email'             => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password'          => static::$password ??= Hash::make('password'),
             'remember_token'    => Str::random(10),
+            'created_by'        => 1,
+            'updated_by'        => 1,
         ];
     }
 

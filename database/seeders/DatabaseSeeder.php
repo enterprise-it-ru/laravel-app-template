@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Создаем админа
         User::factory()->create(
             [
                 'name'     => 'admin',
@@ -26,5 +27,8 @@ class DatabaseSeeder extends Seeder
                 'role'     => 'admin',
             ]
         );
+
+        // И дополнительных пользователей
+        User::factory()->count(50)->create();
     }
 }
