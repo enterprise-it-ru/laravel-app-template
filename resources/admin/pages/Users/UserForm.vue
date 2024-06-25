@@ -17,10 +17,15 @@ const router = useRouter()
 const route = useRoute()
 
 breadcrumbsPreset.users()
-pageHeader.title = 'Добавить пользователя'
 
+pageHeader.title = route.params.id ? 'Изменить пользователя' : 'Добавить пользователя'
 useHead({
-  title: 'Добавить пользователя'
+  title: pageHeader.title
+})
+
+breadcrumbsPreset.add({
+  url: '',
+  name: pageHeader.title
 })
 
 const form = reactive({
@@ -33,16 +38,7 @@ const form = reactive({
 })
 
 const formParams = ref({
-  roles: [
-    {
-      id: 'admin',
-      name: 'Администратор',
-    },
-    {
-      id: 'user',
-      name: 'Пользователь',
-    }
-  ]
+  roles: []
 })
 
 const {run: getFormParams} = useAsync(() => axios.get('/users/get-form-params/')
@@ -75,7 +71,7 @@ const {loading: loadingForm, run: getEditForm} = useAsync(() => axios.get('/user
   })
 )
 
-if(route.params.id) {
+if (route.params.id) {
   // Get user edit form
   getEditForm()
 }
