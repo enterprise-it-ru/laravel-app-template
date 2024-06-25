@@ -17,21 +17,23 @@ const {run} = useAsync(() => logout().then(() => {
 </script>
 
 <template>
-  <div class="position-relative dropdown-center">
-    <div class="user-profile-button d-flex align-items-center cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+  <v-dropdown>
+    <div class="user-profile-button d-flex align-items-center cursor-pointer">
       <user-icon class="user-profile-icon flex-shrink-0" />
       <span class="flex-grow-1 text-break">{{ userData.email }}</span>
       <chevron-down-icon class="icon-18 flex-shrink-0" />
     </div>
-    <ul class="dropdown-menu w-75">
-      <li>
-        <a class="dropdown-item align-items-center d-flex" href="#" @click.prevent="run">
-          <arrow-left-start-on-rectangle-icon class="logout-icon me-1" />
-          Выйти
-        </a>
-      </li>
-    </ul>
-  </div>
+    <template #popper>
+      <div class="list-group list-group-flush min-w-150p">
+        <a
+          v-close-popper
+          href="#"
+          class="list-group-item align-items-center d-flex"
+          @click.prevent="run"
+        ><arrow-left-start-on-rectangle-icon class="logout-icon me-2" /> Выйти</a>
+      </div>
+    </template>
+  </v-dropdown>
 </template>
 
 <style scoped lang="scss">
