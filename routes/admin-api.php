@@ -13,11 +13,11 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'users', 'middleware' => ['auth:web', 'can:is-admin']], function () {
-    Route::get('/', [AdminUsersController::class, 'index'])->name('admin-auth.users.index');
-    Route::get('/list-filters', [AdminUsersController::class, 'listFilters'])->name('admin-auth.users.list-filters');
-    Route::post('/create', [AdminUsersController::class, 'create'])->name('admin-auth.users.create');
-    Route::post('/update', [AdminUsersController::class, 'update'])->name('admin-auth.users.update');
-    Route::get('/get-user-form/{id}', [AdminUsersController::class, 'editUserFormData'])->name('admin-auth.users.edit-user-form');
-    Route::get('/get-form-params', [AdminUsersController::class, 'getFormParams'])->name('admin-auth.users.get-form-params');
-    Route::post('/delete/{id}', [AdminUsersController::class, 'delete'])->name('admin-auth.users.delete');
+    Route::get('/', [AdminUsersController::class, 'index'])->name('admin.users.index');
+    Route::get('/list-filters', [AdminUsersController::class, 'listFilters'])->name('admin.users.list-filters');
+    Route::post('/create', [AdminUsersController::class, 'create'])->name('admin.users.create');
+    Route::post('/update', [AdminUsersController::class, 'update'])->name('admin.users.update');
+    Route::get('/get-user-form/{id}', [AdminUsersController::class, 'editUserFormData'])->name('admin.users.edit-user-form');
+    Route::get('/get-form-params', [AdminUsersController::class, 'getFormParams'])->name('admin.users.get-form-params');
+    Route::post('/delete/{id}', [AdminUsersController::class, 'delete'])->name('admin.users.delete');
 });

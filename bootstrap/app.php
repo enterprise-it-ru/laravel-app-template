@@ -14,7 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health:   '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->redirectGuestsTo('/');
         $middleware->web(CheckBannedMiddleware::class);
+        $middleware->trustProxies(at: ['127.0.0.1', '192.168.65.1/16']);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
