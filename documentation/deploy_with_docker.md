@@ -70,10 +70,10 @@ make up
 make composer-install
 ```
 
-Собираем фронтенд админки:
+Собираем фронтенд админки (предварительно установить nodejs):
 
 ```shell
-make build-admin
+npm ci && npm run build:admin
 ```
 
 И если необходимо восстановить базу данных, дамп можно положить в папку с бэкендом с названием **db_name.sql**, где db_name - значение переменной DB_DATABASE в .env файле.
