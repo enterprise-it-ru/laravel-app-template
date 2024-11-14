@@ -35,6 +35,10 @@ db-migrate:
 	@echo "Running database migrations"
 	@docker exec -it $$(docker ps -q -f name=${COMPOSE_PROJECT_NAME}.php-fpm) php artisan migrate --force
 
+build-admin:
+	@echo "Building admin frontend"
+	@npm ci && npm run build:admin
+
 restore-db:
 	@echo "Restore database dump from file ${DB_DATABASE}.sql"
 	@docker exec -i $$(docker ps -q -f name=${COMPOSE_PROJECT_NAME}.mariadb) mariadb -u${DB_USERNAME} -p"${DB_PASSWORD}" ${DB_DATABASE} < ${DB_DATABASE}.sql
