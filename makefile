@@ -35,9 +35,9 @@ db-migrate:
 	@echo "Running database migrations"
 	@docker exec -it $$(docker ps -q -f name=${COMPOSE_PROJECT_NAME}.php-fpm) php artisan migrate --force
 
-build-admin:
+build-front:
 	@echo "Building admin frontend"
-	@npm ci && npm run build:admin
+	@npm ci && npm run build && npm run build:admin
 
 restore-db:
 	@echo "Restore database dump from file ${DB_DATABASE}.sql"
