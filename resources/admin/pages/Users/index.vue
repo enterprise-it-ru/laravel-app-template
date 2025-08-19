@@ -9,14 +9,15 @@ import axios from "axios";
 import PreloaderComponent from "../../components/Common/PreloaderComponent.vue";
 import { FilterOptions, UserListPage } from "../../types/Users";
 import { reactive, ref } from "vue";
-import LaravelPagination from "../../components/Pagination/LaravelPagination.vue";
 import { Bars3Icon } from "@heroicons/vue/24/outline"
 import { useModal } from "../../composables/useModal";
 import ConfirmUserDeletionModal from "../../components/Modals/ConfirmUserDeletionModal.vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import LaravelRouterPagination from "../../components/Pagination/LaravelRouterPagination.vue";
 
 const {pageHeader, breadcrumbsPreset} = usePage()
 const router = useRouter()
+const route = useRoute()
 
 breadcrumbsPreset.users()
 pageHeader.title = 'Пользователи'
@@ -26,9 +27,10 @@ useHead({
 })
 
 const filter = reactive({
-  query: "",
-  active: null,
-  role: ""
+  query: route.query.query as string | '',
+  active: route.query.active as string | '',
+  role: route.query.role as string | '',
+  page: route.query.page as string | undefined,
 })
 
 const filterOptions = ref<FilterOptions>()
@@ -41,7 +43,7 @@ getFilters()
 
 
 const pageData = ref<UserListPage>()
-const {loading, run: getUsers} = useAsync((page = 1) => axios.get('/users', {params: {...filter, page}})
+const {loading, run: getUsers} = useAsync(() => axios.get('/users', {params: filter})
   .then((response) => {
     pageData.value = response.data
   })
@@ -63,22 +65,38 @@ function confirmDeleteUser(userId: number) {
   })
 }
 
+function setFilter() {
+  // reset pagination when filter is changed
+  filter.page = undefined
+
+  // remove empty values from filter for clean url
+  const cleanedFilter = Object.fromEntries(
+    Object.entries(filter).filter(([, value]) => {
+      return value !== '' && value !== null && value !== undefined;
+    })
+  );
+
+  router.options.history.push(router.resolve({name: 'Users', query: cleanedFilter}).fullPath)
+  getUsers()
+}
+
 </script>
 
 <template>
   <admin-page-layout>
-    <div v-if="filterOptions" class="filter row mb-3">
-      <div class="col-4">
+    <div v-if="filterOptions" class="filter row">
+      <div class="col-12 col-md-4 mb-2 mb-md-3-2">
         <input-text-component
           v-model="filter.query"
           :input-delay="500"
           name="query"
           label="Поиск"
           placeholder="Ведите запрос"
-          @update:model-value="getUsers()"
+          autocomplete="off"
+          @update:model-value="setFilter()"
         />
       </div>
-      <div class="col-2">
+      <div class="col-12 col-md-2 mb-2 mb-md-3">
         <extended-select-component
           v-model="filter.active"
           name="active"
@@ -86,10 +104,10 @@ function confirmDeleteUser(userId: number) {
           label="Активность"
           placeholder="Активность"
           can-clear
-          @update:model-value="getUsers()"
+          @update:model-value="setFilter()"
         />
       </div>
-      <div class="col-2">
+      <div class="col-12 col-md-2 mb-3">
         <extended-select-component
           v-model="filter.role"
           name="active"
@@ -97,10 +115,10 @@ function confirmDeleteUser(userId: number) {
           label="Роль"
           placeholder="Выберите роль"
           can-clear
-          @update:model-value="getUsers()"
+          @update:model-value="setFilter()"
         />
       </div>
-      <div class="col-auto flex-grow-1 text-end align-self-end">
+      <div class="col-auto flex-grow-1 text-md-end align-self-end mb-3">
         <router-link to="/admin/users/create" class="btn btn-primary">
           Добавить
         </router-link>
@@ -163,7 +181,7 @@ function confirmDeleteUser(userId: number) {
         </tr>
       </tbody>
     </table>
-    <laravel-pagination v-if="pageData" :data="pageData" @pagination-change-page="getUsers" />
+    <laravel-router-pagination v-if="pageData" :data="pageData" />
   </admin-page-layout>
 </template>
 

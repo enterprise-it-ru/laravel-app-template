@@ -1,9 +1,9 @@
 {
   "type": "module",
   "private": true,
-  "engines" : {
-    "npm" : ">=10.0.0",
-    "node" : ">=22.0.0"
+  "engines": {
+    "npm": ">=10.0.0",
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "vite",
@@ -40,6 +40,7 @@
     "bootstrap": "^5.3.7",
     "floating-vue": "^5.2.2",
     "pinia": "^3.0.3",
+    "ufo": "^1.6.1",
     "vue": "^3.5.18",
     "vue-i18n": "^11.1.11",
     "vue-router": "^4.5.1",
