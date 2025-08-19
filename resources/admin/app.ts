@@ -10,7 +10,7 @@ import AppComponent from "./App.vue";
 import {authStore} from "./stores/authStore";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import { createHead } from '@unhead/vue'
+import { createHead } from '@unhead/vue/client'
 
 import './scss/app.scss'
 

@@ -6,7 +6,7 @@ import {createPinia} from 'pinia'
 import router from './router';
 import AppComponent from "./App.vue";
 import {authStore} from "./stores/authStore";
-import { createHead } from '@unhead/vue'
+import { createHead } from '@unhead/vue/client'
 
 import 'bootstrap';
 
