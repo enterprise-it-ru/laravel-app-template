@@ -12,6 +12,9 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     exif \
     @composer
 
+# for composer cache
+RUN chmod -R 777 /var/www
+
 COPY --link app.ini $PHP_INI_DIR/conf.d/
 
 FROM php_base AS php_dev
