@@ -125,62 +125,65 @@ function setFilter() {
       </div>
     </div>
     <preloader-component v-if="loading" class="mt-5" centered />
-    <table v-if="pageData && !loading" class="table simple-table table-hover table-borderless shadow-sm">
-      <thead>
-        <tr class="border-bottom">
-          <th style="width: 1px;" />
-          <th>#</th>
-          <th>Имя</th>
-          <th>Активность</th>
-          <th>E-mail</th>
-          <th>Роль</th>
-          <th>Дата создания</th>
-          <th>Дата изменения</th>
-          <th>Создал</th>
-          <th>Изменил</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-if="pageData.data.length > 0">
-          <tr
-            v-for="user of pageData.data"
-            :key="user.id"
-            class="cursor-pointer"
-            @click="router.push({name: 'EditUser', params: {id: user.id}})"
-          >
-            <td class="action-btn-column align-middle" @click.stop>
-              <v-dropdown>
-                <button class="btn btn-sm">
-                  <bars3-icon class="icon-24" />
-                </button>
-                <template #popper>
-                  <div class="list-group list-group-flush min-w-150p">
-                    <router-link :to="{name: 'EditUser', params: {id: user.id}}" class="list-group-item">
-                      Изменить
-                    </router-link>
-                    <a v-close-popper href="#" class="list-group-item text-danger" @click.prevent="confirmDeleteUser(user.id)">Удалить</a>
-                  </div>
-                </template>
-              </v-dropdown>
-            </td>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.active ? 'Да' : 'Нет' }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.role }}</td>
-            <td>{{ user.createdAt }}</td>
-            <td>{{ user.updatedAt }}</td>
-            <td>{{ user.createdBy }}</td>
-            <td>{{ user.updatedBy }}</td>
+    <div v-if="pageData && !loading" class="table-responsive">
+      <table class="table simple-table table-hover simple-table-striped table-borderless shadow-sm">
+        <thead>
+          <tr class="border-bottom">
+            <th style="width: 1px;" />
+            <th>#</th>
+            <th>Имя</th>
+            <th>Активность</th>
+            <th>E-mail</th>
+            <th>Роль</th>
+            <th>Дата создания</th>
+            <th>Дата изменения</th>
+            <th>Создал</th>
+            <th>Изменил</th>
           </tr>
-        </template>
-        <tr v-else>
-          <td colspan="9" class="text-center">
-            Список пуст
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <template v-if="pageData.data.length > 0">
+            <tr
+              v-for="user of pageData.data"
+              :key="user.id"
+              class="cursor-pointer"
+              @click="router.push({name: 'EditUser', params: {id: user.id}})"
+            >
+              <td class="action-btn-column align-middle" @click.stop>
+                <v-dropdown>
+                  <button class="btn btn-sm">
+                    <bars3-icon class="icon-24" />
+                  </button>
+                  <template #popper>
+                    <div class="list-group list-group-flush min-w-150p">
+                      <router-link :to="{name: 'EditUser', params: {id: user.id}}" class="list-group-item">
+                        Изменить
+                      </router-link>
+                      <a v-close-popper href="#" class="list-group-item text-danger" @click.prevent="confirmDeleteUser(user.id)">Удалить</a>
+                    </div>
+                  </template>
+                </v-dropdown>
+              </td>
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.active ? 'Да' : 'Нет' }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.createdAt }}</td>
+              <td>{{ user.updatedAt }}</td>
+              <td>{{ user.createdBy }}</td>
+              <td>{{ user.updatedBy }}</td>
+            </tr>
+          </template>
+          <tr v-else>
+            <td colspan="9" class="text-center">
+              Список пуст
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <laravel-router-pagination v-if="pageData" :data="pageData" />
   </admin-page-layout>
 </template>
