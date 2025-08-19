@@ -42,16 +42,30 @@ npm run dev
 
 Если нет make, то взять команды из makefile и выполнять напрямую
 
+Сначала копируем env файл и правим COMPOSE_PROJECT_NAME, APP_HOST, NGINX_SERVER_NAME и прочие параметры при необходимости.
+
+```bash
+cp .env.example .env
+```
+
+Подготовка к запуску dev окружения:
+
+```bash
+make prepare-dev
+```
+
 Запуск контейнера.
 
 ```bash
 make up
 ```
 
-Открыть консоль:
+Открыть консоль с композером и php:
 
-```
+```bash
 make shell
 ```
 
 В консоли уже можно продолжить обычную установку с шага composer install
+
+Для сборки фронта nodejs устанавливаем в основную систему или в wsl в случае с windows.
