@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Users\Services;
 
+use App\Users\Application\DTO\Request\AdminCreateUserRequestDTO;
+use App\Users\Application\DTO\Request\AdminUpdateUserRequestDTO;
+use App\Users\Application\Services\UsersService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
-use Modules\Users\DTO\Request\AdminCreateUserRequestDTO;
-use Modules\Users\DTO\Request\AdminUpdateUserRequestDTO;
-use Modules\Users\Services\UsersService;
 use Tests\TestCase;
 
 class UsersServiceTest extends TestCase

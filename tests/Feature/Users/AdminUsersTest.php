@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Users;
 
+use App\Users\Domain\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Modules\Users\Models\User;
 use PHPUnit\Framework\Attributes\TestWith;
 use Tests\TestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Users\Application\Controllers\AdminAuthController;
+use App\Users\Application\Controllers\AdminUsersController;
 use Illuminate\Support\Facades\Route;
-use Modules\Users\Controllers\AdminAuthController;
-use Modules\Users\Controllers\AdminUsersController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login', [AdminAuthController::class, 'login'])->name('admin-auth.login');

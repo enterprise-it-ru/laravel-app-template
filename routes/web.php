@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Users\Application\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-use Modules\Users\Controllers\AuthController;
 
 Route::prefix('admin-api/v1')->group(base_path('routes/admin-api.php'));
 
